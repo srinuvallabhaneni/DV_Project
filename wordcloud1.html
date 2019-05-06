@@ -142,7 +142,7 @@
 <script type="text/javascript" >
      $(document).ready(function() {
 
-    $("#sel").live("change", function() {
+    $("#sel").on("change", function() {
         if ($("#state").val() == "noImage") {    
             $("#swap").append(
                 "<img id='swapImg' src='" + $(this).val() + "'>"
@@ -153,7 +153,7 @@
         }
     });
 	
-	$("#sel1").live("change", function() {
+	$("#sel1").on("change", function() {
         if ($("#state1").val() == "noImage") {    
             $("#swap1").append(
                 "<img id='swapImg1' src='" + $(this).val() + "'>"
@@ -176,7 +176,7 @@
  <option value="word/MenAccessories.png">Accessory-Men</option>
 <option value="word/Batteries.png">Batteries</option>
 <option value="word/Birds.png">Birds</option>
-<option value="images/srinivas.jpg">Blues</option>
+<option value="images/srinivas.jpg	">Blues</option>
 
 
 <option value="word/Chargers.png">Chargers</option>
