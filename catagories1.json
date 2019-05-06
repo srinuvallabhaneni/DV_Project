@@ -1,0 +1,346 @@
+{
+  "name": "",
+  "color": "#FAFAFA",
+  "percent": "",
+  "children": [
+    {
+      "name": "Home",
+      "color": "#FFFF00",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Tools",
+          "color": "#FFFACD",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Safety",
+              "color": "#FAFAD2",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Hand",
+              "color": "#FFEFD5",
+              "percent": "40%",
+              "size": 4000
+            },
+            {
+              "name": "Electrical",
+              "color": "#FFE4B5",
+              "percent": "7.66%",
+              "size": 4000
+            }
+          ]
+        },
+    {
+      "name": "Supplies",
+      "color": "#FFDAB9",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Cats",
+          "color": "#EEE8AA",
+          "percent": "20.32%",
+          "size": 4000
+        },
+        {
+          "name": "Dogs",
+          "color": "#F0E68C",
+          "percent": "16.66%",
+          "size": 4000
+        },
+        {
+          "name": "Birds",
+          "color": "#BDB76B",
+          "percent": "5.03%",
+          "size": 4000
+        },
+        {
+          "name": "Others",
+          "color": "#FFFF66",
+          "percent": "7.66%",
+          "size": 4000
+        }
+      ]
+    },
+    {
+      "name": "Outdoor",
+      "color": "#EEE8AA",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Garden",
+          "color": "#CCCC00",
+          "percent": "20.32%",
+          "size": 4000
+        },
+        {
+          "name": "Lawn",
+          "color": "#666600",
+          "percent": "5.03%",
+          "size": 4000
+        }
+      ]
+    }]},
+    {
+      "name": "Amuse",
+      "color": "#E6E6FA",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Music",
+          "color": "#D8BFD8",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Jazz",
+              "color": "#DDA0DD",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Pop",
+              "color": "#EE82EE",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Blues",
+              "color": "#DA70D6",
+              "percent": "7.66%",
+              "size": 4000
+            },
+            {
+              "name": "Metal",
+              "color": "#FF00FF",
+              "percent": "7.66%",
+              "size": 4000
+            },
+            {
+              "name": "Rock",
+              "color": "#BA55D3",
+              "percent": "7.66%",
+              "size": 4000
+            }
+          ]
+        },
+        {
+          "name": "Fun",
+          "color": "#9370DB",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Movies",
+              "color": "#8A2BE2",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "TV",
+              "color": "#9400D3",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "CDS",
+              "color": "#9932CC",
+              "percent": "5.03%",
+              "size": 4000
+            }
+          ]
+        },
+        {
+          "name": "Kids",
+          "color": "#8B008B",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "PS2",
+              "color": "#800080",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Xbox",
+              "color": "#DDA0DD",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "PSP",
+              "color": "#DA70D6",
+              "percent": "5.03%",
+              "size": 4000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Mobile",
+      "color": "#3F51B5",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Add ons",
+          "color": "#3F51B5",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Charger",
+              "color": "#3F51B5",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Battery",
+              "color": "#3949AB",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Headset",
+              "color": "#303F9F",
+              "percent": "7.66%",
+              "size": 4000
+            }
+          ]
+        },
+        {
+          "name": "Cases",
+          "color": "#0071d4",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Phones",
+              "color": "#3D5AFE",
+              "percent": "20.32%",
+              "size": 4000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Looks",
+      "color": "#f44336",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Beauty",
+          "color": "#f44336",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Skin",
+              "color": "#f44336",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Hair",
+              "color": "#d50000",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Makeup",
+              "color": "#c62828",
+              "percent": "7.66%",
+              "size": 4000
+            }
+          ]
+        },
+        {
+          "name": "Wellness",
+          "color": "#f44336",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name":"Dietary",
+              "color": "#f44336",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Health",
+              "color": "#d50000",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Personal",
+              "color": "#b71c1c",
+              "percent": "5.03%",
+              "size": 4000
+            },
+            {
+              "name": "Protein",
+              "color": "#b71c1c",
+              "percent": "5.03%",
+              "size": 4000
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Fashion",
+      "color": "#00BCD4",
+      "percent": "9.10%",
+      "children": [
+        {
+          "name": "Women",
+          "color": "#00ACC1",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Jewelery",
+              "color": "#0097A7",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": ".Clothing",
+              "color": "#00838F",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Inner",
+              "color": "#006064",
+              "percent": "7.66%",
+              "size": 4000
+            }
+          ]
+        },
+        {
+          "name": "Men",
+          "color": "#18FFFF",
+          "percent": "9.10%",
+          "children": [
+            {
+              "name": "Watches",
+              "color": "#00E5FF",
+              "percent": "20.32%",
+              "size": 4000
+            },
+            {
+              "name": "Clothing",
+              "color": "#00B8D4",
+              "percent": "16.66%",
+              "size": 4000
+            },
+            {
+              "name": "Add On",
+              "color": "#009688",
+              "percent": "5.03%",
+              "size": 4000
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

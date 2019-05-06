@@ -1,0 +1,276 @@
+<html>
+<html lang="en">
+        <title>Topic based monthly analysis</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/network.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+
+
+
+    <style>
+	.column {
+  float: left;
+  width: 50%;
+  padding: 10px;
+  height: 300px; /* Should be removed. Only for demonstration */
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        .dot {
+            stroke: #000;
+        }
+        .legend {
+            padding: 5px;
+            font: 10px sans-serif;
+            background: yellow;
+            box-shadow: 2px 2px 1px #888;
+        }
+        svg {
+            width: 100%;
+            /* //height: 100%; 
+        //    position: center; */
+        }
+        .toolTip {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+		
+        }
+		#swap {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 70%;
+  left: 10%;
+  margin: -100px 0 0 -150px;
+  
+}
+#swap1 {
+  position: absolute;
+  width: 300px;
+  height: 200px;
+  z-index: 15;
+  top: 70%;
+  left: 60%;
+  margin: -100px 0 0 -150px;
+  
+}
+    </style>
+
+    
+        <meta charset="utf-8">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://d3js.org/d3.v3.min.js">
+            d3.selectAll("svg").remove();
+        </script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<header>
+<div class="w3-top">
+  <div class="w3-bar w3-teal w3-card w3-left-align w3-tiny" style="width:100%;">
+          <div class="row">
+		      <a href="index.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-home w3-xxlarge"></i>
+					<p>HOME</p>
+					</a>
+			<a href="sunburst.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:16.66%;">
+					<i  class="fa fa-amazon" style="font-size:36px"></i>
+					<p>Products Available</p>
+					</a>
+			
+			<a href="bar.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-line-chart" style="font-size:36px"></i>
+					<p>Review Analysis</p>
+					</a>
+            <a href="bubble.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-life-ring" style="font-size:36px"></i>
+					<p>Review Count by Year</p>
+					</a>
+			<a href="wordcloud1.html" class="w3-bar-item w3-button w3-padding-small w3-text-teal w3-white" style="width:20%;">
+					<i class="fa fa-wordpress" style="font-size:36px"></i>
+					<p>Word Cloud</p>
+					</a>		
+			</div>
+			</div>
+		    </header>
+	  
+	  <body class="White" id="topbody">
+	  <br><br>
+        <h2 align="center" style="background-color:#303030;color:white"><hr>Word Cloud Representation of Categories <hr></h2>
+            <div class="white">
+			
+        
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+<script type="text/javascript" >
+     $(document).ready(function() {
+
+    $("#sel").live("change", function() {
+        if ($("#state").val() == "noImage") {    
+            $("#swap").append(
+                "<img id='swapImg' src='" + $(this).val() + "'>"
+            );
+            $("#state").val('image')
+        } else {
+           $("#swapImg").attr("src", $(this).val());
+        }
+    });
+	
+	$("#sel1").live("change", function() {
+        if ($("#state1").val() == "noImage") {    
+            $("#swap1").append(
+                "<img id='swapImg1' src='" + $(this).val() + "'>"
+            );
+            $("#state1").val('image')
+        } else {
+           $("#swapImg1").attr("src", $(this).val());
+        }
+    });
+
+});
+    </script>
+	<div id="content" class="row"  >
+  <div id="left" style="width:50%;" class="column">
+     <select id="sel">
+ 
+
+
+
+ <option value="word/MenAccessories.png">Accessory-Men</option>
+<option value="word/Batteries.png">Batteries</option>
+<option value="word/Birds.png">Birds</option>
+<option value="word/Blues.png">Blues</option>
+
+<option value="word/Chargers.png">Chargers</option>
+<option value="word/DietaryCare.png">Dietary</option>
+<option value="word/Dogs.png">Dogs</option>
+<option value="word/Electrical.png">Electrical</option>
+<option value="word/Gardening.png">Gardening</option>
+<option value="word/Hair.png">Hair Care</option>
+<option value="word/Hand.png">Hand Tools</option>
+<option value="word/Headsets.png">Headsets-Mobile</option>
+<option value="word/Health.png">Health Care</option>
+<option value="word/Jazz.png">Jazz-Music</option>
+<option value="word/Jewelery.jpeg">Jewelery-Fashion</option>
+<option value="word/LawnMovers.png">Lawn Mowers</option>
+<option value="word/MenClothing.png">Mens Clothing</option>
+<option value="word/MakeUp.png">Make up</option>
+<option value="word/InnerWear.jpeg">Inner Wear - Women</option>
+<option value="word/Metal.png">Metal-Music</option>
+<option value="word/Movies.png">Movies</option>
+<option value="word/OtherProducts.png">Others-Pet supplies</option>
+<option value="word/PersonalCare.png">Personal Care</option>
+<option value="word/Phones.png">Phones</option>
+<option value="word/PSP.png">PlayStation</option>
+<option value="word/Pop.png">Pop-Music</option>
+<option value="word/Rock.png">Rock-Music</option>
+<option value="word/Safety.png">Safety-Home care</option>
+<option value="word/Skin.png">Skin care</option>
+<option value="word/PS2.png">PS2</option>
+<option value="word/HouseHoldSupplies.png">House Hold Supplies</option>
+<option value="word/WomenClothing.png">Women Clothing</option>
+<option value="word/Xbox360.png">Xbox 360</option>
+
+
+
+
+
+
+  </select>
+
+
+
+
+   <div id="swap">
+    <input type="hidden" id="state" name="state" value="noImage" src="Wordcloud/Default.jpg" />
+</div>
+  </div>
+
+  <div id="right" style="width:50%;" class="column">
+     <select id="sel1">
+    <option value="word/MenAccessories.png">Accessory-Men</option>
+<option value="word/Batteries.png">Batteries</option>
+<option value="word/Birds.png">Birds</option>
+<option value="word/Blues.png">Blues</option>
+
+<option value="word/Chargers.png">Chargers</option>
+<option value="word/DietaryCare.png">Dietary</option>
+<option value="word/Dogs.png">Dogs</option>
+<option value="word/Electrical.png">Electrical</option>
+<option value="word/Gardening.png">Gardening</option>
+<option value="word/Hair.png">Hair Care</option>
+<option value="word/Hand.png">Hand Tools</option>
+<option value="word/Headsets.png">Headsets-Mobile</option>
+<option value="word/Health.png">Health Care</option>
+<option value="word/Jazz.png">Jazz-Music</option>
+<option value="word/Jewelery.jpeg">Jewelery-Fashion</option>
+
+<option value="word/LawnMovers.png">Lawn Mowers</option>
+<option value="word/MenClothing.png">Mens Clothing</option>
+<option value="word/Make up.png">Make up</option>
+<option value="word/Inner Wear.jpeg">Inner Wear - Women</option>
+<option value="word/Metal.png">Metal-Music</option>
+<option value="word/Movies.png">Movies</option>
+<option value="word/OtherProducts.png">Others-Pet supplies</option>
+<option value="word/PersonalCare.png">Personal Care</option>
+<option value="word/Phones.png">Phones</option>
+<option value="word/PSP.png">PlayStation</option>
+<option value="word/Pop.png">Pop-Music</option>
+<option value="word/Rock.png">Rock-Music</option>
+<option value="word/Safety.png">Safety-Home care</option>
+<option value="word/Skin.png">Skin care</option>
+<option value="word/PS2.png">PS2</option>
+<option value="word/HouseHoldSupplies.png">House Hold Supplies</option>
+<option value="word/WomenClothing.png">Women Clothing</option>
+<option value="word/Xbox360.png">Xbox 360</option>
+
+</select>
+  <div id="swap1">
+    <input type="hidden" id="state1" name="state" value="noImage" src="Wordcloud/Default.jpg" />
+</div>
+  <br style="clear:both;"/>
+  </div>
+</div>
+
+ 
+  
+   
+
+</html>

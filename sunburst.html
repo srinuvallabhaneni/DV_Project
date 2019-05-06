@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html>
+  <title>Products available sunburst</title>
+  <meta charset="utf-8" http-equiv="X-UA-Compatible" content="IE=9" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- bootstrap -->
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/network.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenMax.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/ScrollMagic/2.0.5/plugins/animation.gsap.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js" charset="utf-8"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js" integrity="sha512-K1qjQ+NcF2TYO/eI3M6v8EiNYZfA95pQumfvcVrTHtwQVDG+aHRqLi/ETn2uB+1JqwYqVG3LIvdm9lj6imS/pQ=="
+    crossorigin="anonymous"></script>
+
+
+  <style>
+  #chart {
+        position: fixed;
+        left: 0px;
+        right: 0px;
+        top: 0px;
+        bottom: 0px;
+      }
+  td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+    
+    
+  </style>
+<header>
+           
+ <div class="w3-top">
+  <div class="w3-bar w3-teal w3-card w3-left-align w3-tiny" style="width:100%;">
+          <div class="row">
+		      <a href="index.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-home w3-xxlarge"></i>
+					<p>HOME</p>
+					</a>
+			<a href="sunburst.html" class="w3-bar-item w3-button w3-padding-small w3-text-teal w3-white" style="width:16.66%;">
+					<i  class="fa fa-amazon" style="font-size:36px"></i>
+					<p>Products Available</p>
+					</a>
+			
+			<a href="bar.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-line-chart" style="font-size:36px"></i>
+					<p>Review Analysis</p>
+					</a>
+            <a href="bubble.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-life-ring" style="font-size:36px"></i>
+					<p>Review count by Year</p>
+					</a>
+			<a href="wordcloud1.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-wordpress" style="font-size:36px"></i>
+					<p>Word Cloud</p>
+					</a>		
+			</div>
+			</div>
+		    </header>
+
+
+<body  id="weeklybody">
+    <br><br>
+	<h2 align="center" class="w3-theme-l1"><hr>Products available on Amazon<hr></h2>
+<div style="width:100%; height: 1000%; float: left;">	
+ <h5 class="w3-theme-l6"> <ol style="list-style-type:1">
+      <ul type="Disc">
+	  <font><li>Different catagory of Products available in the Dataset </li>
+      <li>Second and Third levels shows the different subcatagories. </li>
+	  </ul>
+	  <br> Click on a Product Catagory & hover to view stats.<br>
+	  Click at the center to go back</h5></font>
+	  
+ </div>
+ <br><br>
+ 
+  <div id="div1" style="width:50%; height: 1000%; float: left;">
+    </div>
+	
+  <script>
+var diameter = document.getElementById("div1").offsetWidth;
+    var margin = {
+	  top: 0,
+      right: 0,
+      bottom: 0,
+      left: 0
+    };
+    var w = diameter - margin.left - margin.right,
+      h = diameter - margin.top - margin.bottom,
+      radius = (Math.min(w, h) / 2.98);
+    var formatNumber = d3.format(",d");
+    var percentBase = 100;
+    var x = d3.scale.linear()
+      .range([0, 2 * Math.PI]);
+    var y = d3.scale.linear()
+      .range([0, radius]);
+    var partition = d3.layout.partition()
+      .value(function (d) {
+        return d.size;
+      });
+    // responsive svg
+    var svg = d3.select("#div1").append("svg")
+      .attr("width", 1000)
+      .attr("height",1000)
+      .append("g")
+      .attr("transform", "translate(" + diameter / 2 + "," + diameter / 3 + ")");
+    var arc = d3.svg.arc()
+      .startAngle(function (d) {
+        return Math.max(0, Math.min(2 * Math.PI, x(d.x)));
+      })
+      .endAngle(function (d) {
+        return Math.max(0, Math.min(2 * Math.PI, x(d.x + d.dx)));
+      })
+      .innerRadius(function (d) {
+        return Math.max(0, y(d.y));
+      })
+      .outerRadius(function (d) {
+        return Math.max(0, y(d.y + d.dy));
+      });
+    // tooltip
+    //var tooltip = d3.select("body").append("div")
+     // .attr("class", "tooltip")
+     // .style("opacity", 0);
+    d3.json("catagories1.json", function (error, root) {
+      if (error) throw error;
+      //console.log(root);
+      var g = svg.selectAll("path")
+        .data(partition.nodes(root))
+        .enter().append("g");
+      var path = g.append("path")
+        .attr("d", arc)
+        .style("fill", function (d) {
+          //console.log(d.name);
+          return d.color;
+        })
+        .style("stroke", "white")
+        .style("stroke-width", "1px")
+        .on("click", click)
+        .on("mouseover", function (d, i) {
+          d3.select(this).style("cursor", "pointer")
+          var totalSize = path.node().__data__.value;
+          //console.log("D Value " + d.value);
+          //console.log("Total Size " + totalSize);
+          var percentage = Math.round(((100 * d.value / totalSize) * 100) / percentBase);
+          //console.log("Percentage string " + percentage);
+          //console.log("Percentage Base " + percentBase);
+          var percentageString = percentage + "%";
+          if (d.name == "Day") return null;
+          tooltip.text(d.name + " " + percentageString)
+            .style("opacity", 0.8)
+            .style("left", (d3.event.pageX) + 0 + "px")
+            .style("top", (d3.event.pageY) - 0 + "px");
+          if (d.name == "Day") {
+            return null;
+          }
+        })
+        .on("mouseout", function (d) {
+          d3.select(this).style("cursor", "default")
+          tooltip.style("opacity", 0);
+        });
+      var text = g.append("text")
+        .attr("transform", function (d) {
+          return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
+        })
+        .attr("text-anchor", "middle")
+        .attr("dx", "0") // margin
+        .attr("dy", ".35em") // vertical-align
+        .text(function (d) {
+          //console.log("The D: " + d.name)
+          return d.name == "Question" ? "Question" : d.name == "Answer" ? "Answer" :
+            d.name == "Accepted-Answer" ? "Acc-Ans" :
+              (d.name == "Day") ? null : d.name; //|| d.name == "android" || d.name == "spring" || d.name == "swing" || d.name == "hibernate" || d.name == "maven" || d.name == "jsp" || d.name == "json" ) ? null : d.name;
+        })
+        .attr("opacity", function (d, i) {
+          var totalSize2 = path.node().__data__.value;
+          //console.log("D Value 2 " + d.value);
+          //console.log("Total Size 2 " + totalSize2);
+          var percentage2 = Math.round(((100 * d.value / totalSize2) * 100) / percentBase);
+          totalSize2 = 0;
+          //console.log("Percentage 2 " + percentage2);
+          return percentage2 < 1 ? 0 : 1;
+        })
+        //|| parseFloat(d.percent.split("%")[0]) < 8
+        .style("font-size", "13px")
+        .style("fill", "#0a2538");
+      function click(d) {
+if (d.name == "Phones"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='NULL' height='90' width='90'></img></td><td>NULL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='NULL'height='90' width='90'></td><td>NULL</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31SRCQDTZRL._SY300_.jpg'height='90' width='90'></td><td>Samsung E105 Phone (T-Mobile)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31G6XSG4Z6L._SY300_.jpg'height='90' width='90'></td><td>Motorola i730 Phone (Nextel)</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41Q9Z8JTM0L._SY300_.jpg'height='97' width='90'></td><td>PCS Phone Samsung VI660 (Sprint)</td></tr>";}
+if (d.name == "Jazz"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51kAU0TyvBL._SX300_.jpg' height='90' width='90'></img></td><td>Jazz Samba</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21D694FNE1L.jpg'height='90' width='90'></td><td>Songs for Swingin Lovers</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21HJ9VNBR0L.jpg'height='90' width='90'></td><td>Somethin Else</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51EhdAVBhvL._SY300_.jpg'height='90' width='90'></td><td>Bags Groove</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51ZAFh9kn0L._SY300_.jpg'height='97' width='90'></td><td>Boss Guitar</td></tr>";}
+if (d.name == "Pop"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4195K8M90KL._SX300_.jpg' height='90' width='90'></img></td><td>Joan Baez 2</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/218H7DDCKNL.jpg'height='90' width='90'></td><td>Loser</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51bae6s-qeL._SY300_.jpg'height='90' width='90'></td><td>Chalk Mark in a Rain Storm</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51IFtSaIfBL._SY300_.jpg'height='90' width='90'></td><td>The End of the Innocence</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51ZxRSI-5FL._SY300_.jpg'height='97' width='90'></td><td>Heart of Stone</td></tr>";}
+if (d.name == "Blues"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/518mfzqCO%2BL._SY300_.jpg' height='90' width='90'></img></td><td>King of the Delta Blues</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41FCEQ626WL._SX300_.jpg'height='90' width='90'></td><td>Ledbetter Heights</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/518mfzqCO%2BL._SY300_.jpg'height='90' width='90'></td><td>King of the Delta Blues</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41FCEQ626WL._SX300_.jpg'height='90' width='90'></td><td>Ledbetter Heights</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/518mfzqCO%2BL._SY300_.jpg'height='97' width='90'></td><td>King of the Delta Blues</td></tr>";}
+if (d.name == "Metal"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51rk3v4VqlL._SY300_.jpg' height='90' width='90'></img></td><td>New Wind</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51XEWMBPT5L.jpg'height='90' width='90'></td><td>Grits Sandwiches for Breakfast</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/414v7iZd%2BHL._SY300_.jpg'height='90' width='90'></td><td>Billy</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51xH4zLTeHL._SY300_.jpg'height='90' width='90'></td><td>Copenhagen</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/219BEA5HK3L.jpg'height='97' width='90'></td><td>Sound &amp; Vision</td></tr>";}
+if (d.name == "Rock"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51pmW%2BDM7tL._SX300_.jpg' height='90' width='90'></img></td><td>Cars</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51pDGkXjAVL._SX300_.jpg'height='90' width='90'></td><td>Pet Sounds</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51rk3v4VqlL._SY300_.jpg'height='90' width='90'></td><td>New Wind</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21QVPX6E66L.jpg'height='90' width='90'></td><td>Modern 88</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41A6K7CC2ML._SX300_.jpg'height='97' width='90'></td><td>Having a Party With Jonathan Richman</td></tr>";}
+if (d.name == "Movies"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51zvhcgrvFL._SY300_.jpg' height='90' width='90'></img></td><td>Gifted Hands: The Ben Carson Story</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51dQ2VDG5kL._SX300_.jpg'height='90' width='90'></td><td>Mel Brooks Collector Set [VHS]</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51AVBG4FKWL._SY300_.jpg'height='90' width='90'></td><td>Much Ado About Nothing</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/513N2SKXVKL._SY300_.jpg'height='90' width='90'></td><td>Fifth Element [VHS]</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51QBBN96DHL._SY300_.jpg'height='97' width='90'></td><td>Steel Magnolias [VHS]</td></tr>";}
+if (d.name == "PS2"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41KyhydyiUL.jpg' height='90' width='90'></img></td><td>NULL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31931RVMR7L.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31TA4GZTWZL.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/5141GVDTFKL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/71RkPHbesKL._SX300_.gif'height='97' width='90'></td><td>NULL</td></tr>";}
+if (d.name == "Xbox"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41Ll0JSVV2L._SY300_.jpg' height='90' width='90'></img></td><td>NULL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31C5rbk1Z-L._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31MZS%2BTjZ2L._SX300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51VHVhlVuyL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51VHVhlVuyL._SY300_.jpg'height='97' width='90'></td><td>NULL</td></tr>";}
+if (d.name == "PSP"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4111q8inRlL._SY300_.jpg' height='90' width='90'></img></td><td>NULL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41Lz%2BdAsojL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51DA5ZYC4EL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51hdYpYRpML._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/61DTFN1PJ1L._SY300_.jpg'height='97' width='90'></td><td>NULL</td></tr>";}
+if (d.name == "Cats"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/511SAprcfcL._SY300_.jpg' height='90' width='90'></img></td><td>Pathway Cat Journal, Capture Your Memories, Pet Health and More</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/218YGPQ7N6L.jpg'height='90' width='90'></td><td>Happy Dog Toys Kitten Mitten</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51xwyqk1MIL._SY300_.jpg'height='90' width='90'></td><td>Program Tabs 6pk Dog Green/Red 11-20 Lbs Cat 1-6 Lbs</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51f%2BNan6bXL._SY300_.jpg'height='90' width='90'></td><td>Program Orange for cats up to 10 lbs 6 month supply</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51pRTgVbjlL._SY300_.jpg'height='97' width='90'></td><td>Program Oral Suspension For Cats 11-20 lbs, 6 Pack</td></tr>";}
+if (d.name == "Dogs"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51KKS8QP7FL._SY300_.jpg' height='90' width='90'></img></td><td>Network+ Exam Prep</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/218VWHCPQ1L.jpg'height='90' width='90'></td><td>Suzies Tartar Liquid - 16 oz</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41S0Ds8n93L._SY300_.jpg'height='90' width='90'></td><td>Solid Gold S.E.P. (Stop Eating Poop) 3.5oz</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41GCXJzrs5L._SY300_.jpg'height='90' width='90'></td><td>Cosamin DS Joint Health Supplement, Capsules, 210-Count Bottle</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41ijNCPXu8L._SY300_.jpg'height='97' width='90'></td><td>Cloud Star Buddy Wash Pet Shampoo, Lavender &amp; Mint (16 Ounce)</td></tr>";}
+if (d.name == "Birds"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51ax4wz0ZVL._SY300_.jpg' height='90' width='90'></img></td><td>Bella BirdCo Kito Toy - 10 Strand Bird Toy</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51JbAY9mdHL._SY300_.jpg'height='90' width='90'></td><td>Heath Manufacturing S-1-8 Single Hanging Suet Feeder</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51PelZq0iyL._SY300_.jpg'height='90' width='90'></td><td>Pretty Bird International BPB79117 20-Pound Daily Select Premium Bird Food, Medium</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51dMvOIOIXL._SY300_.jpg'height='90' width='90'></td><td>Heath Outdoor Products HB-1 Squirrel Baffle</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51ycBmGIJDL._SX300_.jpg'height='97' width='90'></td><td>Heath Outdoor Products SB-3 Mounting Squirrel Baffle</td></tr>";}
+if (d.name == "Others"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/615swQkXKbL._SY300_.jpg' height='90' width='90'></img></td><td>Notes From The Grooming Table by Melissa Verplank</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51xpkAJ8xnL._SY300_.jpg'height='90' width='90'></td><td>Theory of Five Book by Melissa Verplank</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/413cMlmLh-L._SY300_.jpg'height='90' width='90'></td><td>Supreme Gerri Premium Gerbil Food</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31FQB8H8PHL.jpg'height='90' width='90'></td><td>Super Pet CritterTrail Value Pack (#4, fun-nels tubes - 1 </td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51Jv4II39yL._SY300_.jpg'height='97' width='90'></td><td>Lifemate Hemp Small Animal Bedding</td></tr>";}
+if (d.name == "Safety"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/71KQZMM0NRL._SX300_.gif' height='90' width='90'></img></td><td>Occidental Leather 5022O Genuine Leather Knee Pads</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/71R8RHCN61L._SY300_.gif'height='90' width='90'></td><td>Barwalt Tool Company KN-1 Ultralight Knee Pad</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41FHKA22H0L._SX300_.jpg'height='90' width='90'></td><td>McGuire-Nicholas 317 Foam Rubber Knee Pads</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41CVZN0N1ML._SX300_.jpg'height='90' width='90'></td><td>First Alert FCD3 Battery Powered Carbon Monoxide Alarm</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41TQASNB74L.gif'height='97' width='90'></td><td>First Alert SA67D Smoke Detector</td></tr>";}
+if (d.name == "Hand"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31IKNw4rGxL._SY300_.jpg' height='90' width='90'></img></td><td>HDE Xbox 360 Console Opening Tool</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31%2BAeigJz1L._SY300_.jpg'height='90' width='90'></td><td>HDE Xbox 360 Console Opening Tool</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21x%2BL95NAyL._SX300_.jpg'height='90' width='90'></td><td>Triwing Y Trigram Screwdriver with Magnetic Tip (Colors May Vary)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51XP0521VWL._SX300_.jpg'height='90' width='90'></td><td>Jorgensen 64016 Precision Miter Saw</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/31JBOwdFxJL._SX300_.jpg'height='97' width='90'></td><td>Quick-Grip 546 Mini Bar Clamp</td></tr>";}
+if (d.name == "Electrical"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41qxLbGeaYL._SX342_.jpg' height='90' width='90'></img></td><td>CBConcept Brand Halogen Light Bulb 120Volt 35Watt JCD G8 Base- 10 Bulbs</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41zJbVQ3P3L._SX300_.jpg'height='90' width='90'></td><td>CBconcept 10XG412V10W G4 JC Halogen Light Bulb,10-Watt,12-Volt, 10 Bulbs</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41qxLbGeaYL._SX342_.jpg'height='90' width='90'></td><td>CBconcept&reg; Halogen Light Bulb 120Volt 20Watt JCD G8 Base- 10 Bulbs (Length: 37mm)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41v0TtfiA1L._SX342_.jpg'height='90' width='90'></td><td>CBConcept Brand JDR GU10 120V 35W 35 Watt 30Degree Halogen Light Bulb - 12 Bulbs</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41VPHEhjRoL._SX342_.jpg'height='97' width='90'></td><td>CBConcept Brand Halogen Light Bulb JCD GY6.35 120V 35W - 10 Bulbs</td></tr>";}
+if (d.name == "Garden"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51MgsdzNXeL._SX300_.jpg' height='90' width='90'></img></td><td>Collection</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51Gt3TElmgL._SY300_.jpg'height='90' width='90'></td><td>Raincheck</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/415NZ3G3VQL.jpg'height='90' width='90'></td><td>Daydream</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31X6cmu%2BbIL._SY300_.jpg'height='90' width='90'></td><td>Bully Tools 91400 Stud Tuner Lumber Straightener with Steel Handle, U-Shaped Head</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/719GMHSDNAL._SX300_.gif'height='97' width='90'></td><td>QLT By MARSHALLTOWN 17-8F 8-Inch Aluminum Starter</td></tr>";}
+if (d.name == "Lawn"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/81YJMTJQCHL._SX300_.gif' height='90' width='90'></img></td><td>Milwaukee Replacement Chain for Milwaukee 6215 Chainsaw 48-58-0030 (Discontinued by Manufacturer)</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/71KDWD6YJ1L._SX300_.gif'height='90' width='90'></td><td>Prazi USA P7020 Chain for New Style PR7000 New Style Beam Cutters</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31A7D7B17QL._SX300_.jpg'height='90' width='90'></td><td>Gilmour 21 Inch Bow Saw Replacement Blade 521B</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31cZRyr9fKL._SX300_.jpg'height='90' width='90'></td><td>Olympia Tools 65-504 Wood Grenade Patented Diamond Shape Splitting Wedge</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51c9a4%2BB98L._SY300_.jpg'height='97' width='90'></td><td>Weed Eater 952-701663 String Trimmer Spool for XT110/112/114/115 .065-Inch</td></tr>";}
+if (d.name == "Dietary"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4133RUj1trL._SX300_.jpg' height='90' width='90'></img></td><td>Moulding Motion 5 + Free Reducer Gel Weight Loss</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51TjDvYVREL._SY300_.jpg'height='90' width='90'></td><td>Slo-Niacin Polygel Controlled-Release Niacin, 750 mg, 100 Tablets</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51QR0uSzxIL._SY300_.jpg'height='90' width='90'></td><td>Slow Fe Slow Release Iron Tablets 90-Count Box</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/414-HgMziwL._SY300_.jpg'height='90' width='90'></td><td>Nature?s Bounty Acidophilus with Lactis Chewable Milk Free Wafers, Natural Strawberry Flavor, 100 Count</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41O3OPgufjL._SY300_.jpg'height='97' width='90'></td><td>Natrol Pycnogenol 50mg Capsules, 60-Count</td></tr>";}
+if (d.name == "Health"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51ZFfZQ0jPL._SX300_.jpg' height='90' width='90'></img></td><td>Wellness Briefs Original, w/ NASA Technology, Large, Case/60 (3/20s)</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31Eie3KjZ7L.jpg'height='90' width='90'></td><td>Cryoderm Pain Relieving Roll-on, 3oz. - Special 5 Pack !</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51E8Xf9VxUL._SY300_.jpg'height='90' width='90'></td><td>Tarblock Cigarette Filters For Smokers 5 Packs</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51riGHIGdVL._SY300_.jpg'height='90' width='90'></td><td>Sedona Suite</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51VZccfQ2LL._SY300_.jpg'height='97' width='90'></td><td>Ayr Saline Nasal Gel, With Soothing Aloe, 0.5-Ounce Tubes (Pack of 4)</td></tr>";}
+if (d.name == "Personal"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21SRDXVWVPL._SY300_.jpg' height='90' width='90'></img></td><td>Sonicare PS-1 Sonic Toothbrush</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51dGkqI85cL._SY300_.jpg'height='90' width='90'></td><td>Philips Norelco HQ5 Shaving Heads</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/512GqCWLfdL._SY300_.jpg'height='90' width='90'></td><td>Philips Norelco HQ6 Replacement Head</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31AmKTPWMkL._SY300_.jpg'height='90' width='90'></td><td>Oral-B Professional Care 1000 Power Toothbrush</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41ETN94F6RL._SX300_.jpg'height='97' width='90'></td><td>Braun 3612 InterFace Rechargeable Shaver</td></tr>";}
+if (d.name == "Protein"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51WxRBmEA9L._SY300_.jpg' height='90' width='90'></img></td><td>Maxell LR44 Batteries 10 Pack</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51jRu9J8P-L._SY300_.jpg'height='90' width='90'></td><td>Duracell MN1400B4 C Cell 4-Count</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4166wMCtrRL._SY300_.jpg'height='90' width='90'></td><td>Rubbermaid Home G034-06 Mop Bucket with Wringer</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/61O-dNhV4pL._SY300_.jpg'height='90' width='90'></td><td>Energizer AA Lithium Batteries 4 count, Lasts 9 Times Longer</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41r-WXG9v6L._SY300_.jpg'height='97' width='90'></td><td>OXO Good Grips Household Scrub Brush</td></tr>";}
+if (d.name == "Skin"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41WKcGbLJkL._SX300_.jpg' height='90' width='90'></img></td><td>Dermalogica AGE Smart Power Rich (5 x .3 oz.)</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31z4hSY4vWL._SX300_.jpg'height='90' width='90'></td><td>Mary Kay Satin Hands Hand Cream Travel MINI Size Set of 6</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41aUb-3r9UL._SY300_.jpg'height='90' width='90'></td><td>Olay White Radiance Intensive Whitening Cream SPF 24 UV Protection (50 g)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/419dPyqcBnL._SX300_.jpg'height='90' width='90'></td><td>La Mer The Eye Balm Intense .1 oz / 3ml Tube. Deluxe Travel Size</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/217TBYf63ZL._SY300_.jpg'height='97' width='90'></td><td>Avon Anew Clinical Derma-Full X3 Facial Filling Serum</td></tr>";}
+if (d.name == "Hair"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31g0RA-tBqL._SX300_.jpg' height='90' width='90'></img></td><td>Elemis Aromazing Shampoo - 300 mL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31avt1juwsL._SY300_.jpg'height='90' width='90'></td><td>Curl Up Conditioner by KMS for Unisex Conditioner, 8.5 Ounce</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31tu4fUl4DL._SY300_.jpg'height='90' width='90'></td><td>Kms California Hairplay Paste Up Spray, 6.4 Fluid Ounce</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/415JK1zpJUL._SY300_.jpg'height='90' width='90'></td><td>Kms California Moist Repair Shampoo, 25.3 Ounce</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/311OW8kgUbL._SY300_.jpg'height='97' width='90'></td><td>Biolage Color Care Shielding Shine Mist by Matrix, 4.20 Ounce</td></tr>";}
+if (d.name == "Makeup"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/519-RK1YMyL._SY300_.jpg' height='90' width='90'></img></td><td>NEW EUROPEAN COLLECTION Too Faced Natural Eyes Shadow Palette 9 Colors</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/513QDTXLMoL._SX300_.jpg'height='90' width='90'></td><td>Mac Magic N 1 Leopard 12 Eyeshadow Palette</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41Rn18OeU6L._SY300_.jpg'height='90' width='90'></td><td>WAWO 15 Color Professionl Makeup Eyeshadow Camouflage Facial Concealer Neutral Palette</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51dwN%2BnO33L._SY300_.jpg'height='90' width='90'></td><td>OPI Nail Polish MEDITERRANEAN MOONLIGHT NL E23 - 15mL (0.5 FL Oz)</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41sk7l9uBlL._SY300_.jpg'height='97' width='90'></td><td>Maybelline New York Expert Wear Brow &amp; Eyeliner, 151 Velvet Black , .011 oz (310 mg)</td></tr>";}
+if (d.name == "Jewelery"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51JCLkQkBnL._SY300_.jpg' height='90' width='90'></img></td><td>Bear Ear Hoodie Jacket &amp; Poms on drawstrings ~ DARK CREAM BEIGE ~ Size Large</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4135gTwjsiL._SX300_.jpg'height='90' width='90'></td><td>Watch Black Match Iphone</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/419yKtE0IUL._SY300_.jpg'height='90' width='90'></td><td>WinWin Korean Fashion Leather Double Wrap Belt Bracelet White</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41mduzEUxnL._SX300_.jpg'height='90' width='90'></td><td>Brand new Tifa Final Fantasy VII HANDMADE Costume SIZE M</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41LpXQWItKL._SX342_.jpg'height='97' width='90'></td><td>A1 MAX - Anime Costume Party Cosplay Short Curly Wig Red</td></tr>";}
+if (d.name == ".Clothing"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/414C5g51JbL._SX395_.jpg' height='90' width='90'></img></td><td>Small Yet Convenient Dulce De Leche Fish Jute Zip Close Coin Purse Wallet</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/413qs9b9SLL._SX395_.jpg'height='90' width='90'></td><td>Small Yet Convenient Light Pink Fish Jute Zip Close Coin Purse Wallet</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/511Kl0i9A9L._SY300_.jpg'height='90' width='90'></td><td>Bra Strap Extenders 2X3 and 3X3 HOOK-White beige Black (3x3 Hooks / 12Pcs)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41p5NTR5rNL._SX342_.jpg'height='90' width='90'></td><td>RACER CORSET - SMALL</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41mbEuL5TIL._SX342_.jpg'height='97' width='90'></td><td>OFF THE SHOULDER DIAMOND NET MINI DRESS - BLACK - ONE SIZE</td></tr>";}
+if (d.name == "Inner"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31MN13CX97L._SX342_.jpg' height='90' width='90'></img></td><td>Medela~Large~Comfort Bra~Nude~New In Package~#676</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41aW3zKqTfL._SX342_.jpg'height='90' width='90'></td><td>Medela Comfort Bra</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31M0pMcfWXL._SY445_.jpg'height='90' width='90'></td><td>Medela Comfort Nursing Bra - White - L</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31MN13CX97L._SX342_.jpg'height='90' width='90'></td><td>Comfort Light Support Maternity/Nursing Bra - M</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/314F9eU%2B2gL._SX342_.jpg'height='97' width='90'></td><td>Fancee Free Extra Support Nursing Bra</td></tr>";}
+if (d.name == "Watches"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4135gTwjsiL._SX300_.jpg' height='90' width='90'></img></td><td>Watch Black Match Iphone</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51WW66SFWFL._SY300_.jpg'height='90' width='90'></td><td>Casio Sea Pathfinder Black SPF-60-1AV</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51VQ4H18S7L._SY300_.jpg'height='90' width='90'></td><td>Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51qZEpiBMpL._SX300_.jpg'height='90' width='90'></td><td>Creative Labs Nomad Jukebox (Blue)</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51MH7ZB46AL._SY300_.jpg'height='97' width='90'></td><td>Suunto Vector Wristop Computer with Compass, Altimeter &amp; Barometer</td></tr>";}
+if (d.name == "Clothing"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51JCLkQkBnL._SY300_.jpg' height='90' width='90'></img></td><td>Bear Ear Hoodie Jacket &amp; Poms on drawstrings ~ DARK CREAM BEIGE ~ Size Large</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/4135gTwjsiL._SX300_.jpg'height='90' width='90'></td><td>Watch Black Match Iphone</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/5145DN79W8L._SY395_.jpg'height='90' width='90'></td><td>Lonely Planet Thailand</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51WW66SFWFL._SY300_.jpg'height='90' width='90'></td><td>Casio Sea Pathfinder Black SPF-60-1AV</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/51VQ4H18S7L._SY300_.jpg'height='97' width='90'></td><td>Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV</td></tr>";}
+if (d.name == "Add On"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51VQ4H18S7L._SY300_.jpg' height='90' width='90'></img></td><td>Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41mduzEUxnL._SX300_.jpg'height='90' width='90'></td><td>Brand new Tifa Final Fantasy VII HANDMADE Costume SIZE M</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41LpXQWItKL._SX342_.jpg'height='90' width='90'></td><td>A1 MAX - Anime Costume Party Cosplay Short Curly Wig Red</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31kPmZ5-D-L._SX342_.jpg'height='90' width='90'></td><td>Obey Snapback Black Snapback Hat</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/511Kl0i9A9L._SY300_.jpg'height='97' width='90'></td><td>Bra Strap Extenders 2X3 and 3X3 HOOK-White beige Black (3x3 Hooks / 12Pcs)</td></tr>";}
+if (d.name == "Charger"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41H0DdRZ76L._SY300_.jpg' height='90' width='90'></img></td><td>Red LED Car/Vehicle Charger for Samsung&copy; SPH-M800 INSTINCT</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31Qbr1DtEsL.jpg'height='90' width='90'></td><td>Official OEM Rapid/Fast Rate Home Charger for Motorola Droid Phone with fixed blades! Original Equipment and Manufacturer (AC 110-220 volt)</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41UmrENLMXL._SY300_.jpg'height='90' width='90'></td><td>OEM Wall / Home Charger for LG VX-8560 Chocolate 3 Phone! Official Original Equipment and Manufacturer (AC 110-220 volt) III VX8560</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/31PXm7qXLdL.jpg'height='90' width='90'></td><td>LG Official OEM Travel Wall Charger for Rumor2 Phone! Original Equipment and Manufacturer (AC 110-220 volt)</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/313lfidyI1L._SY300_.jpg'height='97' width='90'></td><td>Official High Performance OEM Car Charger for Motorola Photon 4G Phone Original Equipment and Manufacturer (DC 12 volt)</td></tr>";}
+if (d.name == "Battery"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41pDBxYLAvL._SY300_.jpg' height='90' width='90'></img></td><td>OEM Rim Micro-USB Travel Charger for Blackberry Curve 8520 / Curve 8900 / Tour 9630 / Storm 9530</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/21KW8GCN2ZL.jpg'height='90' width='90'></td><td>Stanley 66-039 6-Piece Jewelers Precision Screwdriver Set</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/416PK01N49L._SY300_.jpg'height='90' width='90'></td><td>Nokia 900 mAh NiMH Extended Vibrating Battery for Nokia Phones</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/117WFVH33RL.jpg'height='90' width='90'></td><td>Nokia 1000 Mega Herz Li-Ion Battery for Nokia 6800, 6651, 6010, 3595, 3590, 3589i, 3588i, 3587i, 3586i, 3585i, 3585, 3570, 3560, 3520, 3395, 3390, 3360, 2260, 1261, 1260, 1221</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/41QQZ0QGMKL._SY300_.jpg'height='97' width='90'></td><td>Motorola High Performance 800 mAh Lithium Ion Battery for Motorola V60 &amp; P280 Series Phone</td></tr>";}
+if (d.name == "Headset"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51pYZb1LQsL._SY300_.jpg' height='90' width='90'></img></td><td>Wireless Bluetooth Gaming Headset for Sony Playstation 3 PS3 New</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/314ZAKFZ9BL._SY300_.jpg'height='90' width='90'></td><td>PLANTRONICS M-170 Convertible Headset with Noise-Canceling Boom Microphones (PLANTRONICS M170)</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/318XAVJ3HTL._SX300_.jpg'height='90' width='90'></td><td>Plantronics Headset M145 for Mobile &amp; Cordless Phones</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/317TgYlS-HL._SX300_.jpg'height='90' width='90'></td><td>Plantronics Mobile Convertible Headset M175C</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/410MVPY60VL._SX300_.jpg'height='97' width='90'></td><td>Body Glove Earglove Hands-Free Headset for 2.5mm Jack</td></tr>";}
+if (d.name == "Kids"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51-3keFpEQL._SY300_.jpg' height='90' width='90'></img></td><td>NULL</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/5141GVDTFKL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41DkfPUCRjL.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51G53YA05VL._SY300_.jpg'height='90' width='90'></td><td>NULL</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/5184JQ57PYL._SY300_.jpg'height='97' width='90'></td><td>NULL</td></tr>";}
+if (d.name == "TV"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41k27Y0HnCL.jpg' height='90' width='90'></img></td><td>Dinosaurs and the Bible (Creation Science Evangelism: Creation Seminar Series, Seminar Part 3) [VHS]</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41WKKB29T3L._SY300_.jpg'height='90' width='90'></td><td>Exercise for Life: The Video [VHS]</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB192198896_.gif'height='90' width='90'></td><td>ONMUSIC APPRECIATION 3.0</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/41OXLRlwgXL.jpg'height='90' width='90'></td><td>Video [VHS]</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://g-ecx.images-amazon.com/images/G/01/x-site/icons/no-img-sm._CB192198896_.gif'height='97' width='90'></td><td>PRENTICE HALL SPANISH REALIDADES LEVEL A/B/1 VIDEO PROGRAM              (VIDEOCASSETTES) 2004C [VHS]</td></tr>";}
+if (d.name == "CDS"){
+document.getElementById('myTable').innerHTML ="<tr><th  style='width: 300px;'>SNO </th><th style='width: 300px;'>Image</th><th style='width: 300px;'>Product Name</th></tr><tr><td>1</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51N2Q8Z4ZXL._SY300_.jpg' height='90' width='90'></img></td><td>Hal Leonard Eric Clapton - The Solo Years DVD</td></tr><tr><td>2</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51FMCBH43PL._SY300_.jpg'height='90' width='90'></td><td>Hal Leonard Guitar Chord Encyclopedia (DVD)</td></tr><tr><td>3</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51mn-CZne7L._SY300_.jpg'height='90' width='90'></td><td>Homespun You Can Play Guitar (DVD)</td></tr><tr><td>4</td><td style='width: 300px;'><Img src='http://ecx.images-amazon.com/images/I/51io9a%2BjToL._SY300_.jpg'height='90' width='90'></td><td>Lead Guitar with Wolf Marshall: A Complete Guide to Soloing</td></tr><tr><td>5</td><td style='width: 10px;'><Img src='http://ecx.images-amazon.com/images/I/515Y4ImL9aL._SY300_.jpg'height='97' width='90'></td><td>Performance Practices in Classical Piano Music (DVD)</td></tr>";}
+	
+	
+		
+        //console.log(percentBase)
+        // fade out all text elements
+        text.transition().attr("opacity", 0);
+        path.transition()
+          .duration(750)
+          .attrTween("d", arcTween(d))
+          .each("end", function (e, i) {
+            // check if the animated element's data e lies within the visible angle span given in d
+            if (e.x >= d.x && e.x < (d.x + d.dx)) {
+              // get a selection of the associated text element
+              var arcText = d3.select(this.parentNode).select("text");
+              // fade in the text element and recalculate positions
+              arcText.transition().duration(750)
+                //.attr("opacity", 1)
+                .attr("opacity", function (d, i) {
+                  var totalSize1 = path.node().__data__.value;
+                  //console.log("D Value 1 " + d.value);
+                  //console.log("Total Size 1 " + totalSize1);
+                  var percentage1 = Math.round(((100 * d.value / totalSize1) * 100) / percentBase);
+                  //console.log("Percentage 1 " + percentage1);
+                  totalSize1 = 0;
+                  return percentage1 < 1 ? 0 : 1;
+                })
+                .attr("transform", function (d) {
+                  return "translate(" + arc.centroid(d) + ")rotate(" + computeTextRotation(d) + ")";
+                })
+                .attr("text-anchor", "middle");
+            }
+          });
+      }
+    });
+    d3.select(self.frameElement).style("height", h + "px");
+    // Interpolate the scales!
+    function arcTween(d) {
+      var xd = d3.interpolate(x.domain(), [d.x, d.x + d.dx]),
+        yd = d3.interpolate(y.domain(), [d.y, 1]),
+        yr = d3.interpolate(y.range(), [d.y ? 20 : 0, radius]);
+      return function (d, i) {
+        return i ? function (t) {
+          return arc(d);
+        } : function (t) {
+          x.domain(xd(t));
+          y.domain(yd(t)).range(yr(t));
+          return arc(d);
+        };
+      };
+    }
+    function computeTextRotation(d) {
+      var ang = (x(d.x + d.dx / 2) - Math.PI / 2) / Math.PI * 180;
+      return (ang > 90) ? 180 + ang : ang;
+    }
+  </script>
+  
+<div id="div2" style="width: 50%; height: 50%; float: left;">
+<table id="myTable">
+</div>
+
+<div id="div3" style="width: 50%; height: 50%; float: left;">
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+</body>
+</html>

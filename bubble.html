@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+        <title>Topic based monthly analysis</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/network.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        .dot {
+            stroke: #000;
+        }
+        .legend {
+            padding: 5px;
+            font: 10px sans-serif;
+            background: yellow;
+            box-shadow: 2px 2px 1px #888;
+        }
+        svg {
+            width: 100%;
+            /* //height: 100%; 
+        //    position: center; */
+        }
+        .toolTip {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+		.col-centered{
+    float: none;
+    margin: 0 auto;
+}
+		
+        }
+    </style>
+
+    
+        <meta charset="utf-8">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://d3js.org/d3.v3.min.js">
+            d3.selectAll("svg").remove();
+        </script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="css/style.css">
+
+
+<header>
+<div class="w3-top">
+  <div class="w3-bar w3-teal w3-card w3-left-align w3-tiny" style="width:100%;">
+          <div class="row">
+		      <a href="index.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-home w3-xxlarge"></i>
+					<p>HOME</p>
+					</a>
+			<a href="sunburst.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:16.66%;">
+					<i  class="fa fa-amazon" style="font-size:36px"></i>
+					<p>Products Available</p>
+					</a>
+			
+			<a href="bar.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-line-chart" style="font-size:36px"></i>
+					<p>Review Analysis</p>
+					</a>
+            <a href="bubble.html" class="w3-bar-item w3-button w3-padding-small w3-text-teal w3-white" style="width:20%;">
+					<i class="fa fa-life-ring" style="font-size:36px"></i>
+					<p>Review count by Year</p>
+					</a>
+			<a href="wordcloud1.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-wordpress" style="font-size:36px"></i>
+					<p>Word Cloud</p>
+					</a>		
+			</div>
+			</div>
+		    </header>
+	  
+	  <body class="white" id="topbody">
+        <br><br>
+		<h2 align="center" style="background-color:#303030;color:white;margin:0;padding:0"><hr>Review count per category and year</h2>
+		<p><ul type="Disc"><li> Ajust the years to visualize the combined  number of products in the selected time interval.</li>&nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp &nbsp <li> Hover the  mouse over the Bubbles to see the category name.</li></p>	
+			<script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/react/15.3.1/react-dom.min.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/d3/4.10.0/d3.min.js'></script>
+
+  
+<div id = 'react-a' class="w3-bar w3-light-grey">
+    <script  src="js/index.js"></script></div></div>
+ </body>
+</html>

@@ -1,0 +1,1096 @@
+<!DOCTYPE html>
+<html lang="en">
+        <title>Topic based monthly analysis</title>
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css"> 
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto'>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="css/network.css">
+<link rel="stylesheet" href="css/header.css">
+<link rel="stylesheet" href="css/footer.css">
+<script src="https://d3js.org/d3.v4.js"></script>
+
+    <style>
+        .axis path,
+        .axis line {
+            fill: none;
+            stroke: black;
+            shape-rendering: crispEdges;
+        }
+        .axis text {
+            font-family: sans-serif;
+            font-size: 11px;
+        }
+        .dot {
+            stroke: #000;
+        }
+        .legend {
+			
+            padding: 30px;
+            font: 10px sans-serif;
+            background: yellow;
+            box-shadow: 2px 2px 1px #888;
+        }
+        svg {
+            width: 100%;
+            /* //height: 100%; 
+        //    position: center; */
+        }
+        .toolTip {
+            font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: center;
+        }
+    </style>
+
+    
+        <meta charset="utf-8">
+        <script type="text/javascript" src="https://code.jquery.com/jquery-latest.min.js"></script>
+        <script type="text/javascript" src="https://d3js.org/d3.v3.min.js">
+            d3.selectAll("svg").remove();
+        </script>
+
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<header>
+           
+ <header>
+           
+ <div class="w3-top">
+  <div class="w3-bar w3-teal w3-card w3-left-align w3-tiny" style="width:100%;">
+          <div class="row">
+		      <a href="index.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-home w3-xxlarge"></i>
+					<p>HOME</p>
+					</a>
+			<a href="sunburst.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:16.66%;">
+					<i  class="fa fa-amazon" style="font-size:36px"></i>
+					<p>Products Available</p>
+					</a>
+			
+			<a href="bar.html" class="w3-bar-item w3-button w3-padding-small w3-text-teal w3-white" style="width:20%;">
+					<i class="fa fa-line-chart" style="font-size:36px"></i>
+					<p>Review Analysis</p>
+					</a>
+            <a href="bubble.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-life-ring" style="font-size:36px"></i>
+					<p>Review count by Year</p>
+					</a>
+			<a href="wordcloud1.html" class="w3-bar-item w3-button w3-padding-small w3-teal" style="width:20%;">
+					<i class="fa fa-wordpress" style="font-size:36px"></i>
+					<p>Word Cloud</p>
+					</a>		
+			</div>
+			</div>
+		    </header>
+  <body class="white" id="topbody">
+        <br><br>
+		<h2 align="center" class="w3-theme-l1"><hr>Good and Bad Reviews <hr></h2>
+            <div class="white">
+			<h6 color="#696969"> Percentage of Good and Bad Reviews for Each Category:</h6>
+        <div class="w3-dropdown-hover w3-teal">
+      <button class="w3-button">Select Catagory</button>
+      <div class="w3-dropdown-content w3-bar-block w3-card-4">
+        <a class="w3-bar-item w3-button w3-text-teal" value="Accessory" href="#">Accessory</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Batteries" href="#">Batteries</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Birds" href="#">Birds</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Blues" href="#">Blues</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Cats" href="#">Cats</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Chargers" href="#">Chargers</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Dietary" href="#">Dietary</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Dogs" href="#">Dogs</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Electrical" href="#">Electrical</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Gardening" href="#">Gardening</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Hair" href="#">Hair</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Handtools" href="#">Handtools</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Headsets" href="#">Headsets</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Health" href="#">Health</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Jazz" href="#">Jazz</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Jewelery" href="#">Jewelery</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Kids" href="#">Kids</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Lawn" href="#">Lawn</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="M-Clothing" href="#">M-Clothing</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="MakeUp" href="#">Make up</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Maternity" href="#">Maternity</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Metal" href="#">Metal</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Movies" href="#">Movies</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Others" href="#">Others</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Personal" href="#">Personal</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Pest" href="#">Pest</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Phones" href="#">Phones</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="PlayStation" href="#">PlayStation</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Pop" href="#">Pop</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Rock" href="#">Rock</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Safety" href="#">Safety</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Skin" href="#">Skin</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="SonyPSP" href="#">Sony PSP</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Supplies" href="#">Supplies</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="TV" href="#">TV</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="W-Clothing" href="#">W-Clothing</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Watches" href="#">Watches</a>
+<a class="w3-bar-item w3-button w3-text-teal" value="Xbox" href="#">Xbox 360</a>
+      </div>
+    </div></div>
+        
+
+        <div id="mbars">
+        </div>
+        <br>
+        </div>
+		<link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-black.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<!-- Work Row -->
+
+<!-- Container -->
+
+
+        <script type="text/javascript" src="https://d3js.org/d3.v3.min.js"></script>
+        <script type="text/javascript">
+var diameter = document.getElementById("mbars").offsetWidth;
+            var Accessory = [{"Name": "Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV",
+"Good": 94,
+"Bad": 6},
+{"Name": "Brand new Tifa Final Fantasy VII HANDMADE Costume SIZE M",
+"Good": 86,
+"Bad": 14},
+{"Name": "A1 MAX - Anime Costume Party Cosplay Short Curly Wig Red",
+"Good": 75,
+"Bad": 25},
+{"Name": "Obey Snapback Black Snapback Hat",
+"Good": 71,
+"Bad": 29},
+{"Name": "Bra Strap Extenders 2X3 and 3X3 HOOK-White beige Black (3x3 Hooks / 12Pcs)",
+"Good": 65,
+"Bad": 35},
+];var Batteries = [{"Name": "OEM Rim Micro-USB Travel Charger for Blackberry Curve 8520 / Curve 8900 / Tour 9630 / Storm 9530",
+"Good": 94,
+"Bad": 6},
+{"Name": "Stanley 66-039 6-Piece Jewelers Precision Screwdriver Set",
+"Good": 69,
+"Bad": 31},
+{"Name": "Nokia 900 mAh NiMH Extended Vibrating Battery for Nokia Phones",
+"Good": 63,
+"Bad": 37},
+{"Name": "Nokia 1000 Mega Herz Li-Ion Battery for Nokia 6800, 6651, 6010, 3595, 3590, 3589i, 3588i, 3587i, 3586i, 3585i, 3585, 3570, 3560, 3520, 3395, 3390, 3360, 2260, 1261, 1260, 1221",
+"Good": 57,
+"Bad": 43},
+{"Name": "Motorola High Performance 800 mAh Lithium Ion Battery for Motorola V60 &amp; P280 Series Phone",
+"Good": 56,
+"Bad": 44},
+];var Birds = [{"Name": "Bella BirdCo Kito Toy - 10 Strand Bird Toy",
+"Good": 82,
+"Bad": 18},
+{"Name": "Heath Manufacturing S-1-8 Single Hanging Suet Feeder",
+"Good": 75,
+"Bad": 25},
+{"Name": "Pretty Bird International BPB79117 20-Pound Daily Select Premium Bird Food, Medium",
+"Good": 73,
+"Bad": 27},
+{"Name": "Heath Outdoor Products HB-1 Squirrel Baffle",
+"Good": 72,
+"Bad": 28},
+{"Name": "Heath Outdoor Products SB-3 Mounting Squirrel Baffle",
+"Good": 51,
+"Bad": 49},
+];var Blues = [{"Name": "King of the Delta Blues",
+"Good": 82,
+"Bad": 18},
+{"Name": "Ledbetter Heights",
+"Good": 72,
+"Bad": 28},
+{"Name": "King of the Delta Blues",
+"Good": 69,
+"Bad": 31},
+{"Name": "Ledbetter Heights",
+"Good": 61,
+"Bad": 39},
+{"Name": "King of the Delta Blues",
+"Good": 58,
+"Bad": 42},
+];var Cats = [{"Name": "CBConcept Brand Halogen Light Bulb 120Volt 35Watt JCD G8 Base- 10 Bulbs",
+"Good": 95,
+"Bad": 5},
+{"Name": "CBconcept 10XG412V10W G4 JC Halogen Light Bulb,10-Watt,12-Volt, 10 Bulbs",
+"Good": 85,
+"Bad": 15},
+{"Name": "CBconcept&reg; Halogen Light Bulb 120Volt 20Watt JCD G8 Base- 10 Bulbs (Length: 37mm)",
+"Good": 75,
+"Bad": 25},
+{"Name": "CBConcept Brand JDR GU10 120V 35W 35 Watt 30Degree Halogen Light Bulb - 12 Bulbs",
+"Good": 67,
+"Bad": 33},
+{"Name": "CBConcept Brand Halogen Light Bulb JCD GY6.35 120V 35W - 10 Bulbs",
+"Good": 63,
+"Bad": 37},
+];var Chargers = [{"Name": "Red LED Car/Vehicle Charger for Samsung&copy; SPH-M800 INSTINCT",
+"Good": 92,
+"Bad": 8},
+{"Name": "Official OEM Rapid/Fast Rate Home Charger for Motorola Droid Phone with fixed blades! Original Equipment and Manufacturer (AC 110-220 volt)",
+"Good": 83,
+"Bad": 17},
+{"Name": "OEM Wall / Home Charger for LG VX-8560 Chocolate 3 Phone! Official Original Equipment and Manufacturer (AC 110-220 volt) III VX8560",
+"Good": 78,
+"Bad": 22},
+{"Name": "LG Official OEM Travel Wall Charger for Rumor2 Phone! Original Equipment and Manufacturer (AC 110-220 volt)",
+"Good": 71,
+"Bad": 29},
+{"Name": "Official High Performance OEM Car Charger for Motorola Photon 4G Phone Original Equipment and Manufacturer (DC 12 volt)",
+"Good": 64,
+"Bad": 36},
+];var Dietary = [{"Name": "Moulding Motion 5 + Free Reducer Gel Weight Loss",
+"Good": 96,
+"Bad": 4},
+{"Name": "Slo-Niacin Polygel Controlled-Release Niacin, 750 mg, 100 Tablets",
+"Good": 88,
+"Bad": 12},
+{"Name": "Slow Fe Slow Release Iron Tablets 90-Count Box",
+"Good": 79,
+"Bad": 21},
+{"Name": "Nature?s Bounty Acidophilus with Lactis Chewable Milk Free Wafers, Natural Strawberry Flavor, 100 Count",
+"Good": 73,
+"Bad": 27},
+{"Name": "Natrol Pycnogenol 50mg Capsules, 60-Count",
+"Good": 58,
+"Bad": 42},
+];var Dogs = [{"Name": "Network+ Exam Prep",
+"Good": 81,
+"Bad": 19},
+{"Name": "Suzies Tartar Liquid - 16 oz",
+"Good": 80,
+"Bad": 20},
+{"Name": "Solid Gold S.E.P. (Stop Eating Poop) 3.5oz",
+"Good": 76,
+"Bad": 24},
+{"Name": "Cosamin DS Joint Health Supplement, Capsules, 210-Count Bottle",
+"Good": 60,
+"Bad": 40},
+{"Name": "Cloud Star Buddy Wash Pet Shampoo, Lavender &amp; Mint (16 Ounce)",
+"Good": 53,
+"Bad": 47},
+];var Electrical = [{"Name": "CBConcept Brand Halogen Light Bulb 120Volt 35Watt JCD G8 Base- 10 Bulbs",
+"Good": 92,
+"Bad": 8},
+{"Name": "CBconcept 10XG412V10W G4 JC Halogen Light Bulb,10-Watt,12-Volt, 10 Bulbs",
+"Good": 85,
+"Bad": 15},
+{"Name": "CBconcept&reg; Halogen Light Bulb 120Volt 20Watt JCD G8 Base- 10 Bulbs (Length: 37mm)",
+"Good": 79,
+"Bad": 21},
+{"Name": "CBConcept Brand JDR GU10 120V 35W 35 Watt 30Degree Halogen Light Bulb - 12 Bulbs",
+"Good": 66,
+"Bad": 34},
+{"Name": "CBConcept Brand Halogen Light Bulb JCD GY6.35 120V 35W - 10 Bulbs",
+"Good": 58,
+"Bad": 42},
+];var Gardening = [{"Name": "Collection",
+"Good": 83,
+"Bad": 17},
+{"Name": "Raincheck",
+"Good": 82,
+"Bad": 18},
+{"Name": "Daydream",
+"Good": 70,
+"Bad": 30},
+{"Name": "Bully Tools 91400 Stud Tuner Lumber Straightener with Steel Handle, U-Shaped Head",
+"Good": 68,
+"Bad": 32},
+{"Name": "QLT By MARSHALLTOWN 17-8F 8-Inch Aluminum Starter",
+"Good": 63,
+"Bad": 37},
+];var Hair = [{"Name": "Elemis Aromazing Shampoo - 300 mL",
+"Good": 96,
+"Bad": 4},
+{"Name": "Curl Up Conditioner by KMS for Unisex Conditioner, 8.5 Ounce",
+"Good": 88,
+"Bad": 12},
+{"Name": "Kms California Hairplay Paste Up Spray, 6.4 Fluid Ounce",
+"Good": 83,
+"Bad": 17},
+{"Name": "Kms California Moist Repair Shampoo, 25.3 Ounce",
+"Good": 80,
+"Bad": 20},
+{"Name": "Biolage Color Care Shielding Shine Mist by Matrix, 4.20 Ounce",
+"Good": 68,
+"Bad": 32},
+];var Hand = [{"Name": "HDE Xbox 360 Console Opening Tool",
+"Good": 95,
+"Bad": 5},
+{"Name": "HDE Xbox 360 Console Opening Tool",
+"Good": 76,
+"Bad": 24},
+{"Name": "Triwing Y Trigram Screwdriver with Magnetic Tip (Colors May Vary)",
+"Good": 73,
+"Bad": 27},
+{"Name": "Jorgensen 64016 Precision Miter Saw",
+"Good": 72,
+"Bad": 28},
+{"Name": "Quick-Grip 546 Mini Bar Clamp",
+"Good": 59,
+"Bad": 41},
+];var Headsets = [{"Name": "Wireless Bluetooth Gaming Headset for Sony Playstation 3 PS3 New",
+"Good": 95,
+"Bad": 5},
+{"Name": "PLANTRONICS M-170 Convertible Headset with Noise-Canceling Boom Microphones (PLANTRONICS M170)",
+"Good": 87,
+"Bad": 13},
+{"Name": "Plantronics Headset M145 for Mobile &amp; Cordless Phones",
+"Good": 86,
+"Bad": 14},
+{"Name": "Plantronics Mobile Convertible Headset M175C",
+"Good": 78,
+"Bad": 22},
+{"Name": "Body Glove Earglove Hands-Free Headset for 2.5mm Jack",
+"Good": 57,
+"Bad": 43},
+];var Health = [{"Name": "Wellness Briefs Original, w/ NASA Technology, Large, Case/60 (3/20s)",
+"Good": 94,
+"Bad": 6},
+{"Name": "Cryoderm Pain Relieving Roll-on, 3oz. - Special 5 Pack !",
+"Good": 89,
+"Bad": 11},
+{"Name": "Tarblock Cigarette Filters For Smokers 5 Packs",
+"Good": 87,
+"Bad": 13},
+{"Name": "Sedona Suite",
+"Good": 86,
+"Bad": 14},
+{"Name": "Ayr Saline Nasal Gel, With Soothing Aloe, 0.5-Ounce Tubes (Pack of 4)",
+"Good": 64,
+"Bad": 36},
+];var Jazz = [{"Name": "Jazz Samba",
+"Good": 88,
+"Bad": 12},
+{"Name": "Songs for Swingin Lovers",
+"Good": 71,
+"Bad": 29},
+{"Name": "Somethin Else",
+"Good": 70,
+"Bad": 30},
+{"Name": "Bags Groove",
+"Good": 62,
+"Bad": 38},
+{"Name": "Boss Guitar",
+"Good": 60,
+"Bad": 40},
+];var Jewelery = [{"Name": "Bear Ear Hoodie Jacket &amp; Poms on drawstrings ~ DARK CREAM BEIGE ~ Size Large",
+"Good": 87,
+"Bad": 13},
+{"Name": "Watch Black Match Iphone",
+"Good": 74,
+"Bad": 26},
+{"Name": "WinWin Korean Fashion Leather Double Wrap Belt Bracelet White",
+"Good": 71,
+"Bad": 29},
+{"Name": "Brand new Tifa Final Fantasy VII HANDMADE Costume SIZE M",
+"Good": 68,
+"Bad": 32},
+{"Name": "A1 MAX - Anime Costume Party Cosplay Short Curly Wig Red",
+"Good": 65,
+"Bad": 35},
+];var Kids = [{"Name": "NULL",
+"Good": 89,
+"Bad": 11},
+{"Name": "NULL",
+"Good": 87,
+"Bad": 13},
+{"Name": "NULL",
+"Good": 74,
+"Bad": 26},
+{"Name": "NULL",
+"Good": 60,
+"Bad": 40},
+{"Name": "NULL",
+"Good": 54,
+"Bad": 46},
+];var Lawn = [{"Name": "Milwaukee Replacement Chain for Milwaukee 6215 Chainsaw 48-58-0030 (Discontinued by Manufacturer)",
+"Good": 92,
+"Bad": 8},
+{"Name": "Prazi USA P7020 Chain for New Style PR7000 New Style Beam Cutters",
+"Good": 78,
+"Bad": 22},
+{"Name": "Gilmour 21 Inch Bow Saw Replacement Blade 521B",
+"Good": 66,
+"Bad": 34},
+{"Name": "Olympia Tools 65-504 Wood Grenade Patented Diamond Shape Splitting Wedge",
+"Good": 57,
+"Bad": 43},
+{"Name": "Weed Eater 952-701663 String Trimmer Spool for XT110/112/114/115 .065-Inch",
+"Good": 52,
+"Bad": 48},
+];var MClothing = [{"Name": "Bear Ear Hoodie Jacket &amp; Poms on drawstrings ~ DARK CREAM BEIGE ~ Size Large",
+"Good": 97,
+"Bad": 3},
+{"Name": "Watch Black Match Iphone",
+"Good": 92,
+"Bad": 8},
+{"Name": "Lonely Planet Thailand",
+"Good": 90,
+"Bad": 10},
+{"Name": "Casio Sea Pathfinder Black SPF-60-1AV",
+"Good": 81,
+"Bad": 19},
+{"Name": "Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV",
+"Good": 59,
+"Bad": 41},
+];var Makeup = [{"Name": "NEW EUROPEAN COLLECTION Too Faced Natural Eyes Shadow Palette 9 Colors",
+"Good": 96,
+"Bad": 4},
+{"Name": "Mac Magic N 1 Leopard 12 Eyeshadow Palette",
+"Good": 81,
+"Bad": 19},
+{"Name": "WAWO 15 Color Professionl Makeup Eyeshadow Camouflage Facial Concealer Neutral Palette",
+"Good": 80,
+"Bad": 20},
+{"Name": "OPI Nail Polish MEDITERRANEAN MOONLIGHT NL E23 - 15mL (0.5 FL Oz)",
+"Good": 67,
+"Bad": 33},
+{"Name": "Maybelline New York Expert Wear Brow &amp; Eyeliner, 151 Velvet Black , .011 oz (310 mg)",
+"Good": 51,
+"Bad": 49},
+];var Maternity = [{"Name": "Medela~Large~Comfort Bra~Nude~New In Package~#676",
+"Good": 79,
+"Bad": 21},
+{"Name": "Medela Comfort Bra",
+"Good": 72,
+"Bad": 28},
+{"Name": "Medela Comfort Nursing Bra - White - L",
+"Good": 65,
+"Bad": 35},
+{"Name": "Comfort Light Support Maternity/Nursing Bra - M",
+"Good": 60,
+"Bad": 40},
+{"Name": "Fancee Free Extra Support Nursing Bra",
+"Good": 52,
+"Bad": 48},
+];var Metal = [{"Name": "New Wind",
+"Good": 88,
+"Bad": 12},
+{"Name": "Grits Sandwiches for Breakfast",
+"Good": 56,
+"Bad": 44},
+{"Name": "Billy",
+"Good": 55,
+"Bad": 45},
+{"Name": "Copenhagen",
+"Good": 52,
+"Bad": 48},
+{"Name": "Sound &amp; Vision",
+"Good": 50,
+"Bad": 50},
+];var Movies = [{"Name": "Gifted Hands: The Ben Carson Story",
+"Good": 94,
+"Bad": 6},
+{"Name": "Mel Brooks Collector Set [VHS]",
+"Good": 89,
+"Bad": 11},
+{"Name": "Much Ado About Nothing",
+"Good": 88,
+"Bad": 12},
+{"Name": "Fifth Element [VHS]",
+"Good": 74,
+"Bad": 26},
+{"Name": "Steel Magnolias [VHS]",
+"Good": 72,
+"Bad": 28},
+];var Others = [{"Name": "Notes From The Grooming Table by Melissa Verplank",
+"Good": 86,
+"Bad": 14},
+{"Name": "Theory of Five Book by Melissa Verplank",
+"Good": 73,
+"Bad": 27},
+{"Name": "Supreme Gerri Premium Gerbil Food",
+"Good": 60,
+"Bad": 40},
+{"Name": "Super Pet CritterTrail Value Pack (#4, fun-nels tubes - 1 ",
+"Good": 54,
+"Bad": 46},
+{"Name": "Lifemate Hemp Small Animal Bedding",
+"Good": 50,
+"Bad": 50},
+];var Personal = [{"Name": "Sonicare PS-1 Sonic Toothbrush",
+"Good": 79,
+"Bad": 21},
+{"Name": "Philips Norelco HQ5 Shaving Heads",
+"Good": 77,
+"Bad": 23},
+{"Name": "Philips Norelco HQ6 Replacement Head",
+"Good": 76,
+"Bad": 24},
+{"Name": "Oral-B Professional Care 1000 Power Toothbrush",
+"Good": 73,
+"Bad": 27},
+{"Name": "Braun 3612 InterFace Rechargeable Shaver",
+"Good": 68,
+"Bad": 32},
+];var Pest = [{"Name": "Sportsmans Connection 8201 Western PA All Outdoor Atlas",
+"Good": 91,
+"Bad": 9},
+{"Name": "Dalen Gardeneer Natural Enemy Scarecrow Inflatable Owl NE-OR",
+"Good": 89,
+"Bad": 11},
+{"Name": "Victor M500 Poison-Free Indoor Fly Trap",
+"Good": 79,
+"Bad": 21},
+{"Name": "Spectrum Group 16905 1-Ounce Replacement Lures (Discontinued by Manufacturer)",
+"Good": 73,
+"Bad": 27},
+{"Name": "Dalen NESR Inflatable Snake",
+"Good": 50,
+"Bad": 50},
+];var Phones = [{"Name": "NULL",
+"Good": 94,
+"Bad": 6},
+{"Name": "NULL",
+"Good": 93,
+"Bad": 7},
+{"Name": "Samsung E105 Phone (T-Mobile)",
+"Good": 85,
+"Bad": 15},
+{"Name": "Motorola i730 Phone (Nextel)",
+"Good": 78,
+"Bad": 22},
+{"Name": "PCS Phone Samsung VI660 (Sprint)",
+"Good": 51,
+"Bad": 49},
+];var PlayStation = [{"Name": "NULL",
+"Good": 93,
+"Bad": 7},
+{"Name": "NULL",
+"Good": 81,
+"Bad": 19},
+{"Name": "NULL",
+"Good": 74,
+"Bad": 26},
+{"Name": "NULL",
+"Good": 68,
+"Bad": 32},
+{"Name": "NULL",
+"Good": 64,
+"Bad": 36},
+];var Pop = [{"Name": "Joan Baez 2",
+"Good": 85,
+"Bad": 15},
+{"Name": "Loser",
+"Good": 79,
+"Bad": 21},
+{"Name": "Chalk Mark in a Rain Storm",
+"Good": 77,
+"Bad": 23},
+{"Name": "The End of the Innocence",
+"Good": 71,
+"Bad": 29},
+{"Name": "Heart of Stone",
+"Good": 59,
+"Bad": 41},
+];var Rock = [{"Name": "Cars",
+"Good": 93,
+"Bad": 7},
+{"Name": "Pet Sounds",
+"Good": 82,
+"Bad": 18},
+{"Name": "New Wind",
+"Good": 80,
+"Bad": 20},
+{"Name": "Modern 88",
+"Good": 60,
+"Bad": 40},
+{"Name": "Having a Party With Jonathan Richman",
+"Good": 59,
+"Bad": 41},
+];var Safety = [{"Name": "Occidental Leather 5022O Genuine Leather Knee Pads",
+"Good": 94,
+"Bad": 6},
+{"Name": "Barwalt Tool Company KN-1 Ultralight Knee Pad",
+"Good": 76,
+"Bad": 24},
+{"Name": "McGuire-Nicholas 317 Foam Rubber Knee Pads",
+"Good": 70,
+"Bad": 30},
+{"Name": "First Alert FCD3 Battery Powered Carbon Monoxide Alarm",
+"Good": 66,
+"Bad": 34},
+{"Name": "First Alert SA67D Smoke Detector",
+"Good": 57,
+"Bad": 43},
+];var Skin = [{"Name": "Dermalogica AGE Smart Power Rich (5 x .3 oz.)",
+"Good": 93,
+"Bad": 7},
+{"Name": "Mary Kay Satin Hands Hand Cream Travel MINI Size Set of 6",
+"Good": 92,
+"Bad": 8},
+{"Name": "Olay White Radiance Intensive Whitening Cream SPF 24 UV Protection (50 g)",
+"Good": 88,
+"Bad": 12},
+{"Name": "La Mer The Eye Balm Intense .1 oz / 3ml Tube. Deluxe Travel Size",
+"Good": 74,
+"Bad": 26},
+{"Name": "Avon Anew Clinical Derma-Full X3 Facial Filling Serum",
+"Good": 54,
+"Bad": 46},
+];var SonyPSP = [{"Name": "NULL",
+"Good": 95,
+"Bad": 5},
+{"Name": "NULL",
+"Good": 75,
+"Bad": 25},
+{"Name": "NULL",
+"Good": 68,
+"Bad": 32},
+{"Name": "NULL",
+"Good": 64,
+"Bad": 36},
+{"Name": "NULL",
+"Good": 50,
+"Bad": 50},
+];var Supplies = [{"Name": "Maxell LR44 Batteries 10 Pack",
+"Good": 82,
+"Bad": 18},
+{"Name": "Duracell MN1400B4 C Cell 4-Count",
+"Good": 73,
+"Bad": 27},
+{"Name": "Rubbermaid Home G034-06 Mop Bucket with Wringer",
+"Good": 68,
+"Bad": 32},
+{"Name": "Energizer AA Lithium Batteries 4 count, Lasts 9 Times Longer",
+"Good": 64,
+"Bad": 36},
+{"Name": "OXO Good Grips Household Scrub Brush",
+"Good": 55,
+"Bad": 45},
+];var WClothing = [{"Name": "Bear Ear Hoodie Jacket &amp; Poms on drawstrings ~ DARK CREAM BEIGE ~ Size Large",
+"Good": 94,
+"Bad": 6},
+{"Name": "Watch Black Match Iphone",
+"Good": 92,
+"Bad": 8},
+{"Name": "WinWin Korean Fashion Leather Double Wrap Belt Bracelet White",
+"Good": 91,
+"Bad": 9},
+{"Name": "Brand new Tifa Final Fantasy VII HANDMADE Costume SIZE M",
+"Good": 75,
+"Bad": 25},
+{"Name": "A1 MAX - Anime Costume Party Cosplay Short Curly Wig Red",
+"Good": 52,
+"Bad": 48},
+];var Watches = [{"Name": "Watch Black Match Iphone",
+"Good": 80,
+"Bad": 20},
+{"Name": "Casio Sea Pathfinder Black SPF-60-1AV",
+"Good": 78,
+"Bad": 22},
+{"Name": "Casio Solar Powered Titanium Triple Sensor Pro Trek PRG60T-7AV",
+"Good": 67,
+"Bad": 33},
+{"Name": "Creative Labs Nomad Jukebox (Blue)",
+"Good": 64,
+"Bad": 36},
+{"Name": "Suunto Vector Wristop Computer with Compass, Altimeter &amp; Barometer",
+"Good": 62,
+"Bad": 38},
+];var Xbox = [{"Name": "NULL",
+"Good": 84,
+"Bad": 16},
+{"Name": "NULL",
+"Good": 75,
+"Bad": 25},
+{"Name": "NULL",
+"Good": 74,
+"Bad": 26},
+{"Name": "NULL",
+"Good": 67,
+"Bad": 33},
+{"Name": "NULL",
+"Good": 65,
+"Bad": 35},
+];
+
+            /* Add for all months */
+            var color_hash = {
+                0: ["Good", "#009688"],
+                1: ["Bad", "#FF6347"]
+                
+            };
+            var xData = ["Good","Bad"];
+            var margin = { top: 100, right: 50, bottom: 30, left: 80 },
+                width = document.getElementById("mbars").offsetWidth/2,
+                height = document.getElementById("mbars").offsetWidth/4;
+            d3.selectAll("svg").remove();
+            var x = d3.scale.ordinal()
+                .rangeRoundBands([0, width + 40], .35);
+            var y = d3.scale.linear()
+                .rangeRound([height, 0]);
+            //var color = d3.scale.category20();
+            var color = ["#009688", "#FF6347"]
+            var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+            var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+            //.ticks(10);
+            // tootltip
+            var div = d3.select("#mbars").append("div").attr("class", "toolTip");
+            var svg = d3.select("#mbars").append("svg")
+                .attr("width", width + margin.left + margin.right)
+                .attr("height", height + margin.top + margin.bottom + 10)
+                .append("g")
+                .attr("transform", "translate(" + document.getElementById("mbars").offsetWidth/4 + "," + margin.top + ")");
+				
+            var dataIntermediate = xData.map(function (c) {
+                return Accessory.map(function (d) {
+                    return { x: d.Name, y: d[c] };
+                });
+            });
+			
+            var dataStackLayout = d3.layout.stack()(dataIntermediate);
+            x.domain(dataStackLayout[0].map(function (d) {
+                return d.x;
+            }));
+            y.domain([0,
+                d3.max(dataStackLayout[dataStackLayout.length - 1],
+                    function (d) { return d.y0 + d.y; })
+            ])
+                .nice();
+            // var tooltip = d3.select("body").append("g").attr("class", "toolTip");
+            function wrap(text, width) {
+            text.each(function() {
+              var text = d3.select(this),
+                  words = text.text().split(/\s+/).reverse(),
+                  word,
+                  line = [],
+                  lineNumber = 0,
+                  lineHeight = 1.1, // ems
+                  y = text.attr("y"),
+                  dy = parseFloat(text.attr("dy")),
+                  tspan = text.text(null).append("tspan").attr("x", 0).attr("y", y).attr("dy", dy + "em");
+              while (word = words.pop()) {
+                line.push(word);
+                tspan.text(line.join(" "));
+                if (tspan.node().getComputedTextLength() > width) {
+                  line.pop();
+                  tspan.text(line.join(" "));
+                  line = [word];
+                  tspan = text.append("tspan").attr("x", 0).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
+                }
+              }
+            });
+          }
+			var layer = svg.selectAll(".stack")
+                .data(dataStackLayout)
+                .enter().append("g")
+                .attr("class", "stack")
+                .style("fill", function (d, i) {
+                    return color[i];
+                });
+            layer.selectAll("rect")
+                .data(function (d) {
+                    return d;
+                })
+                .enter().append("rect")
+                .attr("x", function (d) {
+                    return x(d.x);
+                })
+                .attr("y", function (d) {
+                    return y(d.y + d.y0);
+                })
+                .attr("height", function (d) {
+                    return y(d.y0) - y(d.y + d.y0);
+                })
+                .attr("width", x.rangeBand())
+                .on("mouseover", function (d) {
+                    //console.log(d.y);
+                    div.style("left", d3.event.pageX + 10 + "px");
+                    div.style("top", d3.event.pageY - 25 + "px");
+                    div.style("display", "inline-block");
+                    div.html(d.y);
+                })
+                .on("mouseout", function (d) {
+                    div.style("display", "none");
+                })
+            svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+				.selectAll(".tick text")
+      .call(wrap, x.rangeBand());
+				;
+		
+			
+	
+            svg.append("g")
+                .attr("class", "y axis")
+                .attr("transform", "translate(" + 0 + "," + 0 + ")")
+                .call(yAxis);
+			
+            // Add legends
+            var legend = svg.append("g")
+                .attr("class", "legend")
+                .attr("x", width - margin.right + 100)
+                .attr("y", 100)
+                .attr("height", 100)
+                .attr("width", 100);
+            legend.selectAll("g").data(dataStackLayout)
+                .enter()
+                .append('g')
+                .each(function (d, i) {
+                    var g = d3.select(this);
+                    g.append("rect")
+                        .attr("x", width - margin.right +150)
+                        .attr("y", i * 25 + 10)
+                        .attr("width", 10)
+                        .attr("height", 10)
+                        .style("fill", color_hash[String(i)][1]);
+                    g.append("text")
+                        .attr("x", width - margin.right +100)
+                        .attr("y", i * 25 + 20)
+                        .attr("height", 30)
+                        .attr("width", 100)
+                        .style("fill", color_hash[String(i)][1])
+                        .text(color_hash[String(i)][0]);
+                });
+            svg.append("text")
+                .attr("class", "xtext")
+                .attr("x", width / 1.5 - margin.left)
+                .attr("y", height + 35)
+                .attr("text-anchor", "middle")
+                .text("Days");
+            svg.select(".xtext")
+                .text(".");
+            svg.append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 0 - 65)
+                .attr("x", 0 - 220)
+                .attr("dy", "1em")
+                .text("% Good and Bad Reviews");
+            svg.append("text")
+                .attr("class", "title")
+                .attr("x", (width / 1.85))
+                .attr("y", -40)
+                .attr("text-anchor", "middle")
+                .style("font-size", "16px")
+                .style("text-decoration", "underline")
+            svg.select(".title")
+                .text("Top 5 Products in The Category Accessories");
+            // Re-render
+            d3.selectAll(".w3-bar-item")
+                .on("click", function () {
+                    d3.selectAll("svg").remove();
+                    var x = d3.scale.ordinal()
+                        .rangeRoundBands([0, width + 40], .35);
+                    var y = d3.scale.linear()
+                        .rangeRound([height, 0]);
+                    //var color = d3.scale.category20();
+                    var color = ["#009688", "#FF6347"];
+					var xAxis = d3.svg.axis()
+                        .scale(x)
+                        .orient("bottom");
+                    var yAxis = d3.svg.axis()
+                        .scale(y)
+                        .orient("left")
+                    //.ticks(10);
+                    var div1 = d3.select("#mbars").append("div").attr("class", "toolTip");
+                    var svg = d3.select("#mbars").append("svg")
+                        .attr("width", width + margin.left + margin.right)
+                        .attr("height", height + margin.top + margin.bottom + 10)
+                        .append("g")
+                        .attr("transform", "translate(" + document.getElementById('mbars').offsetWidth/4 + "," + margin.top + ")");
+                    var month = this.getAttribute("value");
+                    var newData;
+                    if (month == "Accessory") {newData = Accessory;}
+else if (month == "Batteries") {newData  = Batteries;}
+else if (month == "Birds") {newData = Birds;}
+else if (month == "Blues") {newData = Blues;}
+else if (month == "CDS") {newData = CDS;}
+else if (month == "Cats") {newData = Cats;}
+else if (month == "Chargers") {newData = Chargers;}
+else if (month == "Dietary") {newData = Dietary;}
+else if (month == "Dogs") {newData = Dogs;}
+else if (month == "Electrical") {newData = Electrical;}
+else if (month == "Gardening") {newData = Gardening;}
+else if (month == "Hair") {newData = Hair;}
+else if (month == "Handtools") {newData = Handtools;}
+else if (month == "Headsets") {newData = Headsets;}
+else if (month == "Health") {newData = Health;}
+else if (month == "Jazz") {newData = Jazz;}
+else if (month == "Jewelery") {newData = Jewelery;}
+else if (month == "Kids") {newData = Kids;}
+else if (month == "Lawn") {newData = Lawn;}
+else if (month == "M-Clothing") {newData = M-Clothing;}
+else if (month == "MakeUp") {newData = MakeUp;}
+else if (month == "Maternity") {newData = Maternity;}
+else if (month == "Metal") {newData = Metal;}
+else if (month == "Movies") {newData = Movies;}
+else if (month == "Others") {newData = Others;}
+else if (month == "Personal") {newData = Personal;}
+else if (month == "Pest") {newData = Pest;}
+else if (month == "Phones") {newData = Phones;}
+else if (month == "PlayStation") {newData = PlayStation;}
+else if (month == "Pop") {newData = Pop;}
+else if (month == "Rock") {newData = Rock;}
+else if (month == "Safety") {newData = Safety;}
+else if (month == "Skin") {newData = Skin;}
+else if (month == "SonyPSP") {newData = SonyPSP;}
+else if (month == "Supplies") {newData = Supplies;}
+else if (month == "TV") {newData = TV;}
+else if (month == "W-Clothing") {newData = W-Clothing;}
+else if (month == "Watches") {newData = Watches;}
+else if (month == "Xbox") {newData = Xbox;}
+                    var dataIntermediate = xData.map(function (c) {
+                        return newData.map(function (d) {
+                            return { x: d.Name, y: d[c] };
+                        });
+                    });
+                    var dataStackLayout = d3.layout.stack()(dataIntermediate);
+                    x.domain(dataStackLayout[0].map(function (d) {
+                        return d.x;
+                    }));
+                    y.domain([0,
+                        d3.max(dataStackLayout[dataStackLayout.length - 1],
+                            function (d) { return d.y0 + d.y; })
+                    ])
+                        .nice();
+                    var layer = svg.selectAll(".stack")
+                        .data(dataStackLayout)
+                        .enter().append("g")
+                        .attr("class", "stack")
+                        .style("fill", function (d, i) {
+                            return color[i];
+                        });
+                    layer.selectAll("rect")
+                        .data(function (d) {
+                            return d;
+                        })
+                        .enter().append("rect")
+                        .on("mouseover", function (d) {
+                            div1.style("left", d3.event.pageX + 10 + "px");
+                            div1.style("top", d3.event.pageY - 25 + "px");
+                            div1.style("display", "inline-block");
+                            div1.html(d.y);
+                        })
+                        .on("mouseout", function (d) {
+                            div1.style("display", "none");
+                        })
+                        .transition().duration(2000).ease("linear")
+                        .attr("x", function (d) {
+                            return x(d.x);
+                        })
+                        .attr("y", function (d) {
+                            return y(d.y + d.y0);
+                        })
+                        .attr("height", function (d) {
+                            return y(d.y0) - y(d.y + d.y0);
+                        })
+                        .attr("width", x.rangeBand())
+                    svg.append("g")
+                        .attr("class", "x axis")
+                        .attr("transform", "translate(0," + height + ")")
+                        .transition()
+                        .duration(1000)
+                        .ease("circle")
+                        .call(xAxis)
+				.call(xAxis)
+				.selectAll(".tick text")
+      .call(wrap, x.rangeBand());;
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .attr("transform", "translate(" + 0 + "," + 0 + ")")
+                        .transition()
+                        .duration(1000)
+                        .ease("circle")
+                        .call(yAxis);
+                    // Add legends
+                    var legend = svg.append("g")
+                        .attr("class", "legend")
+                        .attr("x", width - margin.right + 100)
+                        .attr("y", 100)
+                        .attr("height", 100)
+                        .attr("width", 100);
+                    legend.selectAll("g").data(dataStackLayout)
+                        .enter()
+                        .append('g')
+                        .each(function (d, i) {
+                            var g = d3.select(this);
+                            g.append("rect")
+                                .attr("x", width - margin.right +150)
+                                .attr("y", i * 25 + 10)
+                                .attr("width", 10)
+                                .attr("height", 10)
+                                .style("fill", color_hash[String(i)][1]);
+                            g.append("text")
+                                .attr("x", width - margin.right +100)
+                                .attr("y", i * 25 + 20)
+                                .attr("height", 30)
+                                .attr("width", 100)
+                                .style("fill", color_hash[String(i)][1])
+                                .text(color_hash[String(i)][0]);
+                        });
+                    svg.append("text")
+                        .attr("class", "xtext")
+                        .attr("x", width / 1.5 - margin.left)
+                        .attr("y", height + 35)
+                        .attr("text-anchor", "middle")
+                        .text("Days");
+                    svg.select(".xtext")
+                        .text(".");
+                    svg.append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 0 - 65)
+                        .attr("x", 0 - 220)
+                        .attr("dy", "1em")
+                        .text("% of Good and Bad Reviews");
+                    svg.append("text")
+                        .attr("class", "title")
+                        .attr("x", (width / 1.85))
+                        .attr("y", -40)
+                        .attr("text-anchor", "middle")
+                        .style("font-size", "16px")
+                        .style("text-decoration", "underline")
+                    svg.select(".title")
+                        .text("Top 5 products in the Catagory " + month + ".");
+                });
+				
+        </script>
+        <script>
+            $(document).ready(function () {
+                $(".nav-tabs a").click(function () {
+                    $(this).tab('show');
+                });
+            });
+        </script>
+        <script>
+            $.ajaxSetup({
+                // Disable caching of AJAX responses
+                // Used when debugging
+                cache: false
+            });
+                // $.getScript("a.js");
+                // $(".atab").click(function () {
+                //     $.getScript("a.js");
+                // })
+        </script>
+
+        <script>
+            $(".atab").click(function () {
+                $.getScript("a.js");
+            })
+        </script>
+    </body>
+
+
+</html>
+
